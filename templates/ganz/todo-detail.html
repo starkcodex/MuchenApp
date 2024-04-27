@@ -1,0 +1,59 @@
+{% extends '_partials/base.html' %}
+
+
+
+{% block title %}
+
+    Muchen: {{ todo.title }}
+
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="ui breadcrumb">
+    <a href={% url 'home' %} class="section">Home</a>
+    <span class="divider">/</span>
+    <a href={% url 'home'  %} class="section">List of machen</a>
+    <span class="divider">/</span>
+    <div class="active section">Detail machen</div>
+</div>
+
+{% include '_partials/messages.html' %}
+
+
+
+<div class="ui card">
+    <div class="content">
+        <div class="header">{{todo.title}}</div>
+        <div class="meta">{{todo.created_at}}</div>
+        <div class="description">
+            <p>{{todo.description}}</p>
+        </div>
+    </div>
+    <div class="extra content">
+
+        {% if todo.is_completed%}
+
+        <p>
+            <i class="check icon green"></i>
+
+            Completed at {{todo.updated_at}}
+        </p>
+
+        {% else %}
+        <p>
+
+            Not yet completed
+
+        </p>
+
+        {% endif %}
+        <a href={% url 'todo-edit' todo.id %} class="ui button primary">Edit</a>
+        <a href={% url 'todo-delete' todo.id %} class="ui button red">Delete this todo</a>
+    </div>
+
+
+    {% endblock content %}

@@ -1,0 +1,110 @@
+{% extends '_partials/base.html' %}
+
+
+{% block title %}
+
+    Home
+
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="ui breadcrumb">
+    <a href={% url 'home' %} class="section">Home</a>
+    <span class="divider">/</span>
+    <div class="active section">List of machen</div>
+</div>
+
+
+{% include '_partials/messages.html' %}  
+
+    {% if todos %}
+        <table class="ui table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Task started</th>
+                    <th>Task ended</th>
+                    <th>Completed</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for todo in todos %}
+
+                    <tr>
+                        <td>{{todo.title}}</td>
+                        <td>{{todo.description}}</td>
+                        <td>{{todo.task_started}}</td>
+                        <td>{{todo.task_ended}}</td>
+                        <td>
+                            {%  if todo.is_completed %}
+                                
+                            YES <i class="check icon green"></i>
+
+                            {% else %}
+
+                            NO
+
+                            {% endif %}
+                            
+                        </td>
+
+                        
+                        <td>
+                            <a href={% url 'todo' todo.pk %}>
+                                <i class="eye icon"></i>
+                            </a>
+
+                            <a href={% url 'todo-edit' todo.pk %}>
+                                <i class="pencil icon"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <th>
+                        <a href="?filter=all">All {{all_count}}</a>
+                    </th>
+                    <th>
+                        <a href="?filter=incomplete">{{incomplete_count}} Remainning</a>
+                    </th>
+                    <th>
+                        <a href=""></a>
+                    </th>
+                    <th>
+                        <a href=""></a>
+                    </th>
+                    <th>
+                        <a href="?filter=complete">{{completed_count}} completed</a>
+                    </th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+
+
+
+    {% else %}
+
+
+    <div class="ui message">
+        <div class="header">
+            No items yet
+        </div>
+        <p>You can create your first muchen now <a href="{% url 'create-todo' %}">Add muchen</a></p>
+    </div>
+
+
+    {% endif %}
+
+    
+{% endblock content %}
